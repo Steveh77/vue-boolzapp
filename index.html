@@ -25,9 +25,9 @@
                     <div class="profile d-flex justify-content-between align-items-center">
                         <div class="you d-flex p-1 align-items-center">
                             <!-- immagine -->
-                            <img  class="rounded-circle" src="img/avatar_io.jpg" alt="">
+                            <img  class="rounded-circle" :src="'img/avatar' + user.avatar + '.jpg'" alt="">
                             <!-- nome utente dinamico -->
-                            <h3 class="p-left5px p-top10px">Stefano</h3>
+                            <h3 class="p-left5px p-top10px">{{user.name}}</h3>
                         </div>
                         <div class="icons d-flex p-1 align-items-center fs-4 grey ">
                             <!-- icone -->
@@ -88,7 +88,16 @@
     
                     </div>
                     <!-- chat messaggi -->
-                    <div class="chat"></div>
+                    <div class="chat">
+                        <div v-for="message in contacts[0].messages" class="msg-container p-3" :class="message.status">
+                            <div class="msg p-3 rounded-3" :class="'bg-'+ message.status" >
+                                <p class="m-0">{{message.text}}</p>
+                                <time>{{message.date}}</time>
+                            </div>
+                        </div>
+                       
+                    </div>
+                    
                     <!-- nuovo messaggio -->
                     <div class="new-message">
                         <i class="fa-regular fa-face-smile m-4 fs-4"></i>
