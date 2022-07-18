@@ -5,13 +5,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <!-- Font awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- css -->
     <link rel="stylesheet" href="css/style.css">
+    <!-- VUE -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.7.4/dist/vue.js"></script>
+    <!-- dayjs -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"></script>
     <title>Boolzapp</title>
 </head>
 
@@ -55,7 +61,7 @@
                     </div>
                     <!-- contacts -->
                     <div class="contacts">
-                        <div v-for="contact in contacts" class="contact border-bottom3px">
+                        <div v-for="(contact,i) in contacts" class="contact border-bottom3px" @click="goToThisChat(i)">
                             <div class="d-flex p-1 align-items-center">
                                 <!-- immagine -->
                                 <img class="rounded-circle" :src="'img/avatar' + contact.avatar + '.jpg'" alt="">
@@ -69,13 +75,13 @@
                 <!-- parte destra -->
                 <div class="message-chat">
                     <!-- ultimo accesso section -->
-                    <div class="profile d-flex justify-content-between align-items-center">
+                    <div class="profile d-flex justify-content-between align-items-center" >
                         <div class="you d-flex p-1 align-items-center">
                             <!-- immagine -->
-                            <img class="rounded-circle" src="img/avatar_1.jpg" alt="">
+                            <img class="rounded-circle" :src="'img/avatar' + contacts[currentChat].avatar + '.jpg'" alt="">
                             <!-- nome utente dinamico e ultimo accesso-->
                             <div class="utent-last-access">
-                                <h3 class="p-left5px p-top10px mb-0">Michele</h3>
+                                <h3 class="p-left5px p-top10px mb-0">{{contacts[currentChat].name}}</h3>
                                 <h5 class="p-left5px p-top10px grey">Ultimo accesso alle</h5>
                             </div>
                         </div>
@@ -88,8 +94,8 @@
     
                     </div>
                     <!-- chat messaggi -->
-                    <div class="chat">
-                        <div v-for="message in contacts[0].messages" class="msg-container p-3" :class="message.status">
+                    <div v-for="(contact,i) in contacts" class="chat overflow-auto" :class="{'d-active' : currentChat === i}">
+                        <div v-for="message in contacts[i].messages" class="msg-container p-3 " :class="message.status">
                             <div class="msg p-3 rounded-3" :class="'bg-'+ message.status" >
                                 <p class="m-0">{{message.text}}</p>
                                 <time>{{message.date}}</time>
@@ -101,7 +107,7 @@
                     <!-- nuovo messaggio -->
                     <div class="new-message">
                         <i class="fa-regular fa-face-smile m-4 fs-4"></i>
-                        <input type="text" class="form-control h-70" placeholder="scrivi un messaggio">
+                        <input v-model.trim="newText" @keyup.enter="sendNewMessage" type="text" class="form-control h-70" placeholder="scrivi un messaggio">
                         <i class="fa-solid fa-microphone m-4 fs-4"></i>
                     </div>
                 </div>
