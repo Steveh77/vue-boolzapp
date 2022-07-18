@@ -115,6 +115,7 @@ const root = new Vue({
         status : 'sent',
       }
       this.contacts[this.currentChat].messages.push(newMessage)
+      this.newText=""
       setTimeout(() => {
         const newMessage = {
           date : dayjs().format('DD/MM/YYYY HH:mm:ss'),

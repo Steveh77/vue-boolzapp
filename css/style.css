@@ -51,7 +51,9 @@ time{
 .bg-received{
     background-color: white;
 }
-
+.bg-lightgrey{
+    background-color: lightgrey;
+}
     /* BODY */
 .chat-container{
     height: 90%;
@@ -126,4 +128,10 @@ time{
     align-items: center;
     justify-content: center;
     background-color: rgb(243,238,234);
+}
+
+/* hover */
+
+.contact:hover{
+    background-color: lightgrey;
 }
